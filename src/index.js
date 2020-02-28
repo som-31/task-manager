@@ -15,18 +15,21 @@ app.use(express.json());
 //include Routers
 app.use(userRouter)
 app.use(taskRouter)
-const bcrypt = require('bcryptjs')
-
-const sample = async () => {
-    const password = 'Som_31@idfc';
-    const hashedPassword = await bcrypt.hash(password, 8)
-    console.log(password)
-    console.log(hashedPassword)
-    const isMatch = await bcrypt.compare('Som_31@ifc', hashedPassword);
-    console.log(isMatch);
-}
-sample();
 
 app.listen(port, () => {
     console.log('App is up and running on port '+port);
 });
+
+
+const Task = require('./models/task');
+const User = require('./models/user');
+const sample = async () => {
+    //   const task = await Task.findById('5e58e83f3e6b6a6bcd183cbb');
+    //   await task.populate('owner').execPopulate();
+    //   console.log(task.owner)
+    const user = await User.findById('5e58e716b010b169dc33f3af');
+    await user.populate('tasks').execPopulate();
+    console.log(user.tasks)
+}
+
+sample();
